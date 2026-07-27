@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#071014" />
+    <meta
+      name="description"
+      content="硅碳智能 - 面向智能计算的站点路由。"
+    />
+    <title>硅碳智能 | Silicon Grove</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --ink: #eef6f3;
+        --quiet: #91a7a4;
+        --line: rgba(200, 234, 226, 0.16);
+        --aqua: #79f0d0;
+        --deep: #071014;
+      }
+
+      * { box-sizing: border-box; }
+
+      html, body { min-height: 100%; }
+
+      body {
+        margin: 0;
+        overflow-x: hidden;
+        color: var(--ink);
+        background: var(--deep);
+        font-family: Inter, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+      }
+
+      #field {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -2;
+      }
+
+      .grain {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        opacity: .3;
+        pointer-events: none;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.28'/%3E%3C/svg%3E");
+      }
+
+      .shell {
+        min-height: 100svh;
+        max-width: 1500px;
+        margin: auto;
+        padding: 30px clamp(24px, 6vw, 92px) 38px;
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+      }
+
+      header { display: flex; align-items: center; justify-content: space-between; }
+
+      .mark { display: flex; align-items: center; gap: 12px; }
+
+      .mark-icon {
+        width: 30px;
+        height: 30px;
+        display: grid;
+        place-items: center;
+        border: 1px solid rgba(121, 240, 208, .7);
+        position: relative;
+      }
+
+      .mark-icon::before, .mark-icon::after {
+        content: "";
+        position: absolute;
+        inset: 7px;
+        border: 1px solid var(--aqua);
+      }
+      .mark-icon::after { inset: 11px; background: var(--aqua); }
+
+      .mark-text { font-size: 14px; letter-spacing: 2px; font-weight: 600; }
+      .locale { color: var(--quiet); font-size: 11px; letter-spacing: 1.4px; }
+
+      main { align-self: center; padding: 11vh 0 9vh; }
+
+      .eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--aqua);
+        margin-bottom: 25px;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 2px;
+      }
+      .eyebrow::before { content: ""; width: 30px; height: 1px; background: currentColor; }
+
+      h1 {
+        max-width: 850px;
+        margin: 0;
+        font-family: "Songti SC", "Noto Serif SC", Georgia, serif;
+        font-size: clamp(52px, 8.3vw, 124px);
+        font-weight: 500;
+        line-height: .98;
+        letter-spacing: 0;
+      }
+      h1 span { color: var(--aqua); }
+
+      .intro {
+        max-width: 450px;
+        margin: 31px 0 45px;
+        color: #b8c8c5;
+        font-size: 15px;
+        line-height: 1.8;
+      }
+
+      .route {
+        display: inline-flex;
+        flex-wrap: wrap;
+        align-items: stretch;
+        border: 1px solid var(--line);
+        background: rgba(5, 17, 20, .62);
+        backdrop-filter: blur(12px);
+      }
+
+      .route a {
+        min-height: 62px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        padding: 0 22px 0 24px;
+        color: #05211e;
+        background: var(--aqua);
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 700;
+        transition: background .2s ease, transform .2s ease;
+      }
+      .route a:hover { background: #b8ffe9; }
+      .route a:focus-visible { outline: 2px solid white; outline-offset: 3px; }
+      .arrow { font-size: 22px; line-height: 1; font-weight: 400; }
+
+      .route-meta {
+        min-width: 180px;
+        padding: 12px 20px;
+        display: grid;
+        align-content: center;
+        gap: 3px;
+      }
+      .route-meta span { color: var(--quiet); font-size: 10px; letter-spacing: 1.3px; }
+      .route-meta strong { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; color: #d5e4e1; font-size: 12px; font-weight: 500; }
+
+      footer { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; color: #718784; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 10px; line-height: 1.7; letter-spacing: .5px; }
+      .status { display: flex; gap: 8px; align-items: center; }
+      .status i { width: 7px; height: 7px; display: block; border-radius: 50%; background: var(--aqua); box-shadow: 0 0 12px var(--aqua); }
+
+      @media (max-width: 560px) {
+        .shell { padding: 22px 22px 27px; }
+        .locale { display: none; }
+        main { padding: 9vh 0; }
+        h1 { font-size: clamp(48px, 15vw, 76px); }
+        .intro { margin: 25px 0 36px; font-size: 14px; }
+        .route { display: flex; width: 100%; }
+        .route a { flex: 1 1 100%; justify-content: space-between; }
+        .route-meta { flex: 1 1 100%; border-top: 1px solid var(--line); }
+        footer { align-items: flex-start; flex-direction: column; gap: 10px; }
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="field" aria-hidden="true"></canvas>
+    <div class="grain" aria-hidden="true"></div>
+    <div class="shell">
+      <header>
+        <div class="mark" aria-label="硅碳智能 Silicon Grove">
+          <span class="mark-icon" aria-hidden="true"></span>
+          <span class="mark-text">硅碳智能</span>
+        </div>
+        <span class="locale">SILICON GROVE / 2026</span>
+      </header>
+
+      <main>
+        <div class="eyebrow">INTELLIGENT COMPUTING</div>
+        <h1>连接计算的<br /><span>下一种可能</span></h1>
+        <p class="intro">硅碳智能正在构建面向未来的智能基础设施。请选择入口，进入我们的站点路由。</p>
+        <div class="route">
+          <a href="https://link3.cc/silicogrove" target="_blank" rel="noopener noreferrer" aria-label="进入硅碳智能站点路由（新窗口打开）">
+            <span>进入站点路由</span><span class="arrow" aria-hidden="true">&#8599;</span>
+          </a>
+          <div class="route-meta">
+            <span>DESTINATION</span>
+            <strong>link3.cc/silicogrove</strong>
+          </div>
+        </div>
+      </main>
+
+      <footer>
+        <div class="status"><i></i><span>ROUTE SYSTEM / ONLINE</span></div>
+        <span>&copy; 2026 SILICON GROVE</span>
+      </footer>
+    </div>
+    <script>
+      const canvas = document.getElementById('field');
+      const ctx = canvas.getContext('2d');
+      let width, height, dpr;
+
+      function draw() {
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
+        canvas.style.width = width + 'px';
+        canvas.style.height = height + 'px';
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        const gradient = ctx.createRadialGradient(width * .75, height * .35, 0, width * .75, height * .35, Math.max(width, height) * .7);
+        gradient.addColorStop(0, '#123a36');
+        gradient.addColorStop(.42, '#0a1d20');
+        gradient.addColorStop(1, '#071014');
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, width, height);
+
+        const spacing = Math.max(48, Math.round(width / 24));
+        ctx.strokeStyle = 'rgba(139, 223, 204, 0.10)';
+        ctx.lineWidth = 1;
+        for (let x = -spacing; x < width + spacing; x += spacing) {
+          ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x + width * .17, height); ctx.stroke();
+        }
+        for (let y = 0; y < height + spacing; y += spacing) {
+          ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(width, y - width * .17); ctx.stroke();
+        }
+
+        const nodes = [ [.73,.23], [.85,.33], [.67,.48], [.9,.61], [.58,.72], [.79,.83] ];
+        ctx.strokeStyle = 'rgba(121, 240, 208, .32)';
+        ctx.lineWidth = 1;
+        for (let i = 0; i < nodes.length - 1; i++) {
+          ctx.beginPath(); ctx.moveTo(nodes[i][0] * width, nodes[i][1] * height); ctx.lineTo(nodes[i + 1][0] * width, nodes[i + 1][1] * height); ctx.stroke();
+        }
+        nodes.forEach(([x, y], i) => {
+          const px = x * width, py = y * height;
+          const glow = ctx.createRadialGradient(px, py, 0, px, py, 48);
+          glow.addColorStop(0, 'rgba(121, 240, 208, .6)'); glow.addColorStop(1, 'rgba(121, 240, 208, 0)');
+          ctx.fillStyle = glow; ctx.fillRect(px - 48, py - 48, 96, 96);
+          ctx.fillStyle = i === 1 ? '#d9fff4' : '#79f0d0'; ctx.fillRect(px - 2, py - 2, 4, 4);
+        });
+      }
+      draw();
+      window.addEventListener('resize', draw, { passive: true });
+    </script>
+  </body>
+</html>
