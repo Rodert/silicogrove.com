@@ -6,9 +6,9 @@
     <meta name="theme-color" content="#071014" />
     <meta
       name="description"
-      content="硅碳智能 - 面向智能计算的站点路由。"
+      content="硅碳森林 - 面向智能计算的站点路由。"
     />
-    <title>硅碳智能 | Silicon Grove</title>
+    <title>硅碳森林 | Silicon Grove</title>
     <style>
       :root {
         color-scheme: dark;
@@ -162,6 +162,9 @@
       footer { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; color: #718784; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 10px; line-height: 1.7; letter-spacing: .5px; }
       .status { display: flex; gap: 8px; align-items: center; }
       .status i { width: 7px; height: 7px; display: block; border-radius: 50%; background: var(--aqua); box-shadow: 0 0 12px var(--aqua); }
+      .legal { max-width: 720px; text-align: right; }
+      .legal p { margin: 0; }
+      .legal p + p { margin-top: 4px; }
 
       @media (max-width: 560px) {
         .shell { padding: 22px 22px 27px; }
@@ -174,6 +177,7 @@
         .route a { flex: 1 1 100%; justify-content: space-between; }
         .route-meta { flex: 1 1 100%; border-top: 1px solid var(--line); }
         footer { align-items: flex-start; flex-direction: column; gap: 10px; }
+        .legal { max-width: none; text-align: left; }
       }
     </style>
   </head>
@@ -184,7 +188,7 @@
       <header>
         <div class="mark" aria-label="Silicon Grove">
           <span class="mark-icon" aria-hidden="true"></span>
-          <span class="mark-text" data-i18n="brand">硅碳智能</span>
+          <span class="mark-text" data-i18n="brand">硅碳森林</span>
         </div>
         <div class="header-tools">
           <span class="locale">SILICON GROVE / 2026</span>
@@ -207,7 +211,7 @@
       <main>
         <div class="eyebrow" data-i18n="eyebrow">INTELLIGENT COMPUTING</div>
         <h1><span data-i18n="headline">连接计算的</span><span data-i18n="headlineAccent">下一种可能</span></h1>
-        <p class="intro" data-i18n="intro">硅碳智能正在构建面向未来的智能基础设施。请选择入口，进入我们的站点路由。</p>
+        <p class="intro" data-i18n="intro">硅碳森林正在构建面向未来的智能基础设施。请选择入口，进入我们的站点路由。</p>
         <div class="route">
           <a id="route-link" href="https://link3.cc/silicogrove" target="_blank" rel="noopener noreferrer" aria-label="Enter Silicon Grove site route (opens in a new window)">
             <span data-i18n="cta">进入站点路由</span><span class="arrow" aria-hidden="true">&#8599;</span>
@@ -221,19 +225,22 @@
 
       <footer>
         <div class="status"><i></i><span data-i18n="status">ROUTE SYSTEM / ONLINE</span></div>
-        <span>&copy; 2026 SILICON GROVE</span>
+        <div class="legal">
+          <p>&copy; 2026 All Rights Reserved.</p>
+          <p>本站API适用于测试和体验目的，请自觉遵守您当地法律法规，切勿用于非法用途，本站不承担任何法律责任。</p>
+        </div>
       </footer>
     </div>
     <script>
       const translations = {
         en: { brand: 'SILICON GROVE', eyebrow: 'INTELLIGENT COMPUTING', headline: 'Computing,', headlineAccent: 'connected.', intro: 'Silicon Grove is building intelligent infrastructure for what comes next. Select an entry point to access our site route.', cta: 'Enter site route', destination: 'DESTINATION', status: 'ROUTE SYSTEM / ONLINE', title: 'Silicon Grove | Intelligent Computing', description: 'Silicon Grove - a route to intelligent computing.', aria: 'Enter the Silicon Grove site route (opens in a new window)' },
-        'zh-CN': { brand: '硅碳智能', eyebrow: 'INTELLIGENT COMPUTING', headline: '连接计算的', headlineAccent: '下一种可能', intro: '硅碳智能正在构建面向未来的智能基础设施。请选择入口，进入我们的站点路由。', cta: '进入站点路由', destination: 'DESTINATION', status: 'ROUTE SYSTEM / ONLINE', title: '硅碳智能 | Silicon Grove', description: '硅碳智能 - 面向智能计算的站点路由。', aria: '进入硅碳智能站点路由（新窗口打开）' },
+        'zh-CN': { brand: '硅碳森林', eyebrow: 'INTELLIGENT COMPUTING', headline: '连接计算的', headlineAccent: '下一种可能', intro: '硅碳森林正在构建面向未来的智能基础设施。请选择入口，进入我们的站点路由。', cta: '进入站点路由', destination: 'DESTINATION', status: 'ROUTE SYSTEM / ONLINE', title: '硅碳森林 | Silicon Grove', description: '硅碳森林 - 面向智能计算的站点路由。', aria: '进入硅碳森林站点路由（新窗口打开）' },
         ja: { brand: 'シリコン・グローブ', eyebrow: 'INTELLIGENT COMPUTING', headline: '計算をつなぐ、', headlineAccent: '次の可能性。', intro: 'Silicon Grove は、次代に向けたインテリジェント・インフラストラクチャを構築しています。入口を選択し、サイトルートへお進みください。', cta: 'サイトルートへ', destination: 'DESTINATION', status: 'ROUTE SYSTEM / ONLINE', title: 'Silicon Grove | インテリジェント・コンピューティング', description: 'Silicon Grove - インテリジェント・コンピューティングへのルート。', aria: 'Silicon Grove のサイトルートへ進む（新しいウィンドウで開きます）' },
         es: { brand: 'SILICON GROVE', eyebrow: 'COMPUTACIÓN INTELIGENTE', headline: 'Conectar el', headlineAccent: 'cómputo.', intro: 'Silicon Grove construye infraestructura inteligente para el futuro. Elige un acceso para entrar a nuestra ruta del sitio.', cta: 'Entrar a la ruta', destination: 'DESTINO', status: 'SISTEMA DE RUTA / EN LÍNEA', title: 'Silicon Grove | Computación inteligente', description: 'Silicon Grove - una ruta hacia la computación inteligente.', aria: 'Entrar a la ruta del sitio de Silicon Grove (se abre en una ventana nueva)' },
         fr: { brand: 'SILICON GROVE', eyebrow: 'INFORMATIQUE INTELLIGENTE', headline: 'Relier le', headlineAccent: 'calcul.', intro: 'Silicon Grove construit une infrastructure intelligente pour l’avenir. Sélectionnez une entrée pour accéder à notre itinéraire.', cta: 'Accéder au site', destination: 'DESTINATION', status: 'SYSTÈME DE ROUTAGE / EN LIGNE', title: 'Silicon Grove | Informatique intelligente', description: 'Silicon Grove - une voie vers l’informatique intelligente.', aria: 'Accéder à l’itinéraire du site Silicon Grove (s’ouvre dans une nouvelle fenêtre)' },
         ru: { brand: 'SILICON GROVE', eyebrow: 'ИНТЕЛЛЕКТУАЛЬНЫЕ ВЫЧИСЛЕНИЯ', headline: 'Соединяя', headlineAccent: 'вычисления.', intro: 'Silicon Grove создаёт интеллектуальную инфраструктуру для будущего. Выберите вход, чтобы перейти к маршруту сайта.', cta: 'Перейти к сайту', destination: 'НАЗНАЧЕНИЕ', status: 'СИСТЕМА МАРШРУТИЗАЦИИ / В СЕТИ', title: 'Silicon Grove | Интеллектуальные вычисления', description: 'Silicon Grove — маршрут к интеллектуальным вычислениям.', aria: 'Перейти к маршруту сайта Silicon Grove (откроется в новом окне)' },
         ko: { brand: '실리콘 그로브', eyebrow: 'INTELLIGENT COMPUTING', headline: '컴퓨팅을 잇는', headlineAccent: '다음 가능성.', intro: 'Silicon Grove는 미래를 위한 지능형 인프라를 구축합니다. 입구를 선택해 사이트 경로로 이동하세요.', cta: '사이트 경로로 이동', destination: 'DESTINATION', status: 'ROUTE SYSTEM / ONLINE', title: 'Silicon Grove | 지능형 컴퓨팅', description: 'Silicon Grove - 지능형 컴퓨팅을 향한 경로.', aria: 'Silicon Grove 사이트 경로로 이동 (새 창에서 열림)' },
-        'zh-TW': { brand: '矽碳智能', eyebrow: 'INTELLIGENT COMPUTING', headline: '連結運算的', headlineAccent: '下一種可能', intro: '矽碳智能正在建構面向未來的智慧基礎設施。請選擇入口，進入我們的站點路由。', cta: '進入站點路由', destination: 'DESTINATION', status: 'ROUTE SYSTEM / ONLINE', title: '矽碳智能 | Silicon Grove', description: '矽碳智能 - 面向智慧運算的站點路由。', aria: '進入矽碳智能站點路由（新視窗開啟）' }
+        'zh-TW': { brand: '矽碳森林', eyebrow: 'INTELLIGENT COMPUTING', headline: '連結運算的', headlineAccent: '下一種可能', intro: '矽碳森林正在建構面向未來的智慧基礎設施。請選擇入口，進入我們的站點路由。', cta: '進入站點路由', destination: 'DESTINATION', status: 'ROUTE SYSTEM / ONLINE', title: '矽碳森林 | Silicon Grove', description: '矽碳森林 - 面向智慧運算的站點路由。', aria: '進入矽碳森林站點路由（新視窗開啟）' }
       };
 
       const languageSelect = document.getElementById('language');
