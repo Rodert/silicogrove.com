@@ -1,14 +1,14 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#071014" />
     <meta
       name="description"
-      content="硅碳森林 - 面向智能计算的站点路由。"
+      content="Silicon Grove - a route to intelligent computing."
     />
-    <title>硅碳森林 | Silicon Grove</title>
+    <title>Silicon Grove | Intelligent Computing</title>
     <style>
       :root {
         color-scheme: dark;
@@ -188,7 +188,7 @@
       <header>
         <div class="mark" aria-label="Silicon Grove">
           <span class="mark-icon" aria-hidden="true"></span>
-          <span class="mark-text" data-i18n="brand">硅碳森林</span>
+          <span class="mark-text" data-i18n="brand">SILICON GROVE</span>
         </div>
         <div class="header-tools">
           <span class="locale">SILICON GROVE / 2026</span>
@@ -210,11 +210,11 @@
 
       <main>
         <div class="eyebrow" data-i18n="eyebrow">INTELLIGENT COMPUTING</div>
-        <h1><span data-i18n="headline">连接计算的</span><span data-i18n="headlineAccent">下一种可能</span></h1>
-        <p class="intro" data-i18n="intro">硅碳森林正在构建面向未来的智能基础设施。请选择入口，进入我们的站点路由。</p>
+        <h1><span data-i18n="headline">Computing,</span><span data-i18n="headlineAccent">connected.</span></h1>
+        <p class="intro" data-i18n="intro">Silicon Grove is building intelligent infrastructure for what comes next. Select an entry point to access our site route.</p>
         <div class="route">
           <a id="route-link" href="https://link3.cc/silicogrove" target="_blank" rel="noopener noreferrer" aria-label="Enter Silicon Grove site route (opens in a new window)">
-            <span data-i18n="cta">进入站点路由</span><span class="arrow" aria-hidden="true">&#8599;</span>
+            <span data-i18n="cta">Enter site route</span><span class="arrow" aria-hidden="true">&#8599;</span>
           </a>
           <div class="route-meta">
             <span data-i18n="destination">DESTINATION</span>
@@ -245,8 +245,7 @@
 
       const languageSelect = document.getElementById('language');
       const routeLink = document.getElementById('route-link');
-      const preferredLanguage = navigator.language === 'zh-TW' || navigator.language === 'zh-HK' ? 'zh-TW' : navigator.language.startsWith('zh') ? 'zh-CN' : navigator.language.slice(0, 2);
-      const initialLanguage = localStorage.getItem('silicon-grove-language') || (translations[preferredLanguage] ? preferredLanguage : 'en');
+      const initialLanguage = localStorage.getItem('silicon-grove-language') || 'en';
 
       function setLanguage(language) {
         const content = translations[language] || translations.en;
