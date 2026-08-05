@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#071014" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.png" type="image/png" />
     <meta
       name="description"
       content="Silicon Grove - a route to intelligent computing."
@@ -63,21 +63,12 @@
       .mark { display: flex; align-items: center; gap: 12px; }
 
       .mark-icon {
-        width: 30px;
-        height: 30px;
-        display: grid;
-        place-items: center;
-        border: 1px solid rgba(121, 240, 208, .7);
-        position: relative;
+        width: 42px;
+        height: 42px;
+        display: block;
+        flex: 0 0 42px;
+        object-fit: contain;
       }
-
-      .mark-icon::before, .mark-icon::after {
-        content: "";
-        position: absolute;
-        inset: 7px;
-        border: 1px solid var(--aqua);
-      }
-      .mark-icon::after { inset: 11px; background: var(--aqua); }
 
       .mark-text { font-size: 14px; letter-spacing: 2px; font-weight: 600; }
       .header-tools { display: flex; align-items: center; gap: 21px; }
@@ -188,7 +179,7 @@
     <div class="shell">
       <header>
         <div class="mark" aria-label="Silicon Grove">
-          <span class="mark-icon" aria-hidden="true"></span>
+          <img class="mark-icon" src="/assets/silicogrove-mark.png" alt="" />
           <span class="mark-text" data-i18n="brand">SILICON GROVE</span>
         </div>
         <div class="header-tools">
