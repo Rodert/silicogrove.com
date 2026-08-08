@@ -157,6 +157,21 @@
       .legal { max-width: 720px; text-align: right; }
       .legal p { margin: 0; }
       .legal p + p { margin-top: 4px; }
+      .footer-links { margin-bottom: 5px; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 7px 15px; }
+      .footer-links a, .footer-links button { padding: 0; border: 0; color: #a7bbb7; background: none; font: inherit; letter-spacing: inherit; text-decoration: none; cursor: pointer; }
+      .footer-links a:hover, .footer-links button:hover { color: var(--aqua); }
+      .footer-links a:focus-visible, .footer-links button:focus-visible { outline: 1px solid var(--aqua); outline-offset: 4px; }
+
+      .legal-dialog { width: min(680px, calc(100vw - 36px)); max-height: min(760px, calc(100svh - 36px)); padding: 0; border: 1px solid rgba(121, 240, 208, .3); color: var(--ink); background: #0a171a; box-shadow: 0 24px 80px rgba(0, 0, 0, .55); }
+      .legal-dialog::backdrop { background: rgba(2, 8, 10, .78); backdrop-filter: blur(5px); }
+      .dialog-header { min-height: 68px; padding: 18px 20px 18px 24px; display: flex; align-items: center; justify-content: space-between; gap: 20px; border-bottom: 1px solid var(--line); }
+      .dialog-header h2 { margin: 0; font-size: 18px; font-weight: 600; }
+      .dialog-close { width: 32px; height: 32px; flex: 0 0 32px; display: grid; place-items: center; padding: 0; border: 1px solid var(--line); color: var(--ink); background: transparent; font-size: 22px; line-height: 1; cursor: pointer; }
+      .dialog-close:hover { border-color: var(--aqua); color: var(--aqua); }
+      .dialog-close:focus-visible { outline: 2px solid var(--aqua); outline-offset: 2px; }
+      .dialog-body { max-height: calc(100svh - 142px); padding: 22px 24px 28px; overflow-y: auto; color: #b8c8c5; font-size: 14px; line-height: 1.8; }
+      .dialog-body p { margin: 0 0 16px; }
+      .dialog-body p:last-child { margin-bottom: 0; }
 
       @media (max-width: 560px) {
         .shell { padding: 22px 22px 27px; }
@@ -170,6 +185,9 @@
         .route-meta { flex: 1 1 100%; border-top: 1px solid var(--line); }
         footer { align-items: flex-start; flex-direction: column; gap: 10px; }
         .legal { max-width: none; text-align: left; }
+        .footer-links { justify-content: flex-start; }
+        .dialog-header { padding-left: 18px; }
+        .dialog-body { padding: 20px 18px 24px; }
       }
     </style>
   </head>
@@ -218,39 +236,240 @@
       <footer>
         <div class="status"><i></i><span data-i18n="status">ROUTE SYSTEM / ONLINE</span></div>
         <div class="legal">
-          <p>&copy; 2026 All Rights Reserved.</p>
-          <p>本站API适用于测试和体验目的，请自觉遵守您当地法律法规，切勿用于非法用途，本站不承担任何法律责任。</p>
+          <nav class="footer-links" aria-label="Legal and contact">
+            <a href="mailto:support@silicogrove.com">support@silicogrove.com</a>
+            <button type="button" data-legal="terms" data-i18n="terms">User Agreement</button>
+            <button type="button" data-legal="privacy" data-i18n="privacy">Privacy Policy</button>
+          </nav>
+          <p data-i18n="copyright">&copy; 2026 Silicon Grove. All Rights Reserved.</p>
+          <p data-i18n="disclaimer">Services are provided for testing and evaluation. Users must comply with applicable laws and must not use them for unlawful purposes.</p>
         </div>
       </footer>
     </div>
+    <dialog class="legal-dialog" id="legal-dialog" aria-labelledby="legal-title">
+      <div class="dialog-header">
+        <h2 id="legal-title"></h2>
+        <button class="dialog-close" id="legal-close" type="button" aria-label="Close">&times;</button>
+      </div>
+      <div class="dialog-body" id="legal-body"></div>
+    </dialog>
     <script>
       const translations = {
-        en: { brand: 'SILICON GROVE', eyebrow: 'INTELLIGENT COMPUTING', headline: 'Computing,', headlineAccent: 'connected.', intro: 'Silicon Grove is building intelligent infrastructure for what comes next. Select an entry point to access our site route.', cta: 'Enter site route', destination: 'DESTINATION', status: 'ROUTE SYSTEM / ONLINE', title: 'Silicon Grove | Intelligent Computing', description: 'Silicon Grove - a route to intelligent computing.', aria: 'Enter the Silicon Grove site route (opens in a new window)' },
-        'zh-CN': { brand: '硅碳森林', eyebrow: 'INTELLIGENT COMPUTING', headline: '连接计算的', headlineAccent: '下一种可能', intro: '硅碳森林正在构建面向未来的智能基础设施。请选择入口，进入我们的站点路由。', cta: '进入站点路由', destination: 'DESTINATION', status: 'ROUTE SYSTEM / ONLINE', title: '硅碳森林 | Silicon Grove', description: '硅碳森林 - 面向智能计算的站点路由。', aria: '进入硅碳森林站点路由（新窗口打开）' },
-        ja: { brand: 'シリコン・グローブ', eyebrow: 'INTELLIGENT COMPUTING', headline: '計算をつなぐ、', headlineAccent: '次の可能性。', intro: 'Silicon Grove は、次代に向けたインテリジェント・インフラストラクチャを構築しています。入口を選択し、サイトルートへお進みください。', cta: 'サイトルートへ', destination: 'DESTINATION', status: 'ROUTE SYSTEM / ONLINE', title: 'Silicon Grove | インテリジェント・コンピューティング', description: 'Silicon Grove - インテリジェント・コンピューティングへのルート。', aria: 'Silicon Grove のサイトルートへ進む（新しいウィンドウで開きます）' },
-        es: { brand: 'SILICON GROVE', eyebrow: 'COMPUTACIÓN INTELIGENTE', headline: 'Conectar el', headlineAccent: 'cómputo.', intro: 'Silicon Grove construye infraestructura inteligente para el futuro. Elige un acceso para entrar a nuestra ruta del sitio.', cta: 'Entrar a la ruta', destination: 'DESTINO', status: 'SISTEMA DE RUTA / EN LÍNEA', title: 'Silicon Grove | Computación inteligente', description: 'Silicon Grove - una ruta hacia la computación inteligente.', aria: 'Entrar a la ruta del sitio de Silicon Grove (se abre en una ventana nueva)' },
-        fr: { brand: 'SILICON GROVE', eyebrow: 'INFORMATIQUE INTELLIGENTE', headline: 'Relier le', headlineAccent: 'calcul.', intro: 'Silicon Grove construit une infrastructure intelligente pour l’avenir. Sélectionnez une entrée pour accéder à notre itinéraire.', cta: 'Accéder au site', destination: 'DESTINATION', status: 'SYSTÈME DE ROUTAGE / EN LIGNE', title: 'Silicon Grove | Informatique intelligente', description: 'Silicon Grove - une voie vers l’informatique intelligente.', aria: 'Accéder à l’itinéraire du site Silicon Grove (s’ouvre dans une nouvelle fenêtre)' },
-        ru: { brand: 'SILICON GROVE', eyebrow: 'ИНТЕЛЛЕКТУАЛЬНЫЕ ВЫЧИСЛЕНИЯ', headline: 'Соединяя', headlineAccent: 'вычисления.', intro: 'Silicon Grove создаёт интеллектуальную инфраструктуру для будущего. Выберите вход, чтобы перейти к маршруту сайта.', cta: 'Перейти к сайту', destination: 'НАЗНАЧЕНИЕ', status: 'СИСТЕМА МАРШРУТИЗАЦИИ / В СЕТИ', title: 'Silicon Grove | Интеллектуальные вычисления', description: 'Silicon Grove — маршрут к интеллектуальным вычислениям.', aria: 'Перейти к маршруту сайта Silicon Grove (откроется в новом окне)' },
-        ko: { brand: '실리콘 그로브', eyebrow: 'INTELLIGENT COMPUTING', headline: '컴퓨팅을 잇는', headlineAccent: '다음 가능성.', intro: 'Silicon Grove는 미래를 위한 지능형 인프라를 구축합니다. 입구를 선택해 사이트 경로로 이동하세요.', cta: '사이트 경로로 이동', destination: 'DESTINATION', status: 'ROUTE SYSTEM / ONLINE', title: 'Silicon Grove | 지능형 컴퓨팅', description: 'Silicon Grove - 지능형 컴퓨팅을 향한 경로.', aria: 'Silicon Grove 사이트 경로로 이동 (새 창에서 열림)' },
-        'zh-TW': { brand: '矽碳森林', eyebrow: 'INTELLIGENT COMPUTING', headline: '連結運算的', headlineAccent: '下一種可能', intro: '矽碳森林正在建構面向未來的智慧基礎設施。請選擇入口，進入我們的站點路由。', cta: '進入站點路由', destination: 'DESTINATION', status: 'ROUTE SYSTEM / ONLINE', title: '矽碳森林 | Silicon Grove', description: '矽碳森林 - 面向智慧運算的站點路由。', aria: '進入矽碳森林站點路由（新視窗開啟）' }
+        en: { brand: 'SILICON GROVE', eyebrow: 'INTELLIGENT COMPUTING', headline: 'Computing,', headlineAccent: 'connected.', intro: 'Silicon Grove is building intelligent infrastructure for what comes next. Select an entry point to access our site route.', cta: 'Enter site route', destination: 'DESTINATION', status: 'ROUTE SYSTEM / ONLINE', terms: 'User Agreement', privacy: 'Privacy Policy', copyright: '© 2026 Silicon Grove. All Rights Reserved.', disclaimer: 'Services are provided for testing and evaluation. Users must comply with applicable laws and must not use them for unlawful purposes.', title: 'Silicon Grove | Intelligent Computing', description: 'Silicon Grove - a route to intelligent computing.', aria: 'Enter the Silicon Grove site route (opens in a new window)' },
+        'zh-CN': { brand: '硅碳森林', eyebrow: 'INTELLIGENT COMPUTING', headline: '连接计算的', headlineAccent: '下一种可能', intro: '硅碳森林正在构建面向未来的智能基础设施。请选择入口，进入我们的站点路由。', cta: '进入站点路由', destination: 'DESTINATION', status: 'ROUTE SYSTEM / ONLINE', terms: '用户协议', privacy: '隐私政策', copyright: '© 2026 硅碳森林。保留所有权利。', disclaimer: '本站服务仅用于测试和体验。用户须遵守所在地适用法律法规，不得将服务用于任何违法用途。', title: '硅碳森林 | Silicon Grove', description: '硅碳森林 - 面向智能计算的站点路由。', aria: '进入硅碳森林站点路由（新窗口打开）' },
+        ja: { brand: 'シリコン・グローブ', eyebrow: 'INTELLIGENT COMPUTING', headline: '計算をつなぐ、', headlineAccent: '次の可能性。', intro: 'Silicon Grove は、次代に向けたインテリジェント・インフラストラクチャを構築しています。入口を選択し、サイトルートへお進みください。', cta: 'サイトルートへ', destination: 'DESTINATION', status: 'ROUTE SYSTEM / ONLINE', terms: '利用規約', privacy: 'プライバシーポリシー', copyright: '© 2026 Silicon Grove. All Rights Reserved.', disclaimer: '本サービスはテストおよび評価目的で提供されます。適用法令を遵守し、違法な目的で使用しないでください。', title: 'Silicon Grove | インテリジェント・コンピューティング', description: 'Silicon Grove - インテリジェント・コンピューティングへのルート。', aria: 'Silicon Grove のサイトルートへ進む（新しいウィンドウで開きます）' },
+        es: { brand: 'SILICON GROVE', eyebrow: 'COMPUTACIÓN INTELIGENTE', headline: 'Conectar el', headlineAccent: 'cómputo.', intro: 'Silicon Grove construye infraestructura inteligente para el futuro. Elige un acceso para entrar a nuestra ruta del sitio.', cta: 'Entrar a la ruta', destination: 'DESTINO', status: 'SISTEMA DE RUTA / EN LÍNEA', terms: 'Acuerdo de usuario', privacy: 'Política de privacidad', copyright: '© 2026 Silicon Grove. Todos los derechos reservados.', disclaimer: 'Los servicios se ofrecen para pruebas y evaluación. Los usuarios deben cumplir las leyes aplicables y no utilizarlos con fines ilícitos.', title: 'Silicon Grove | Computación inteligente', description: 'Silicon Grove - una ruta hacia la computación inteligente.', aria: 'Entrar a la ruta del sitio de Silicon Grove (se abre en una ventana nueva)' },
+        fr: { brand: 'SILICON GROVE', eyebrow: 'INFORMATIQUE INTELLIGENTE', headline: 'Relier le', headlineAccent: 'calcul.', intro: 'Silicon Grove construit une infrastructure intelligente pour l’avenir. Sélectionnez une entrée pour accéder à notre itinéraire.', cta: 'Accéder au site', destination: 'DESTINATION', status: 'SYSTÈME DE ROUTAGE / EN LIGNE', terms: 'Conditions d’utilisation', privacy: 'Politique de confidentialité', copyright: '© 2026 Silicon Grove. Tous droits réservés.', disclaimer: 'Les services sont fournis à des fins de test et d’évaluation. Les utilisateurs doivent respecter les lois applicables et ne pas les utiliser à des fins illicites.', title: 'Silicon Grove | Informatique intelligente', description: 'Silicon Grove - une voie vers l’informatique intelligente.', aria: 'Accéder à l’itinéraire du site Silicon Grove (s’ouvre dans une nouvelle fenêtre)' },
+        ru: { brand: 'SILICON GROVE', eyebrow: 'ИНТЕЛЛЕКТУАЛЬНЫЕ ВЫЧИСЛЕНИЯ', headline: 'Соединяя', headlineAccent: 'вычисления.', intro: 'Silicon Grove создаёт интеллектуальную инфраструктуру для будущего. Выберите вход, чтобы перейти к маршруту сайта.', cta: 'Перейти к сайту', destination: 'НАЗНАЧЕНИЕ', status: 'СИСТЕМА МАРШРУТИЗАЦИИ / В СЕТИ', terms: 'Пользовательское соглашение', privacy: 'Политика конфиденциальности', copyright: '© 2026 Silicon Grove. Все права защищены.', disclaimer: 'Сервисы предоставляются для тестирования и оценки. Пользователи обязаны соблюдать применимое законодательство и не использовать их в незаконных целях.', title: 'Silicon Grove | Интеллектуальные вычисления', description: 'Silicon Grove — маршрут к интеллектуальным вычислениям.', aria: 'Перейти к маршруту сайта Silicon Grove (откроется в новом окне)' },
+        ko: { brand: '실리콘 그로브', eyebrow: 'INTELLIGENT COMPUTING', headline: '컴퓨팅을 잇는', headlineAccent: '다음 가능성.', intro: 'Silicon Grove는 미래를 위한 지능형 인프라를 구축합니다. 입구를 선택해 사이트 경로로 이동하세요.', cta: '사이트 경로로 이동', destination: 'DESTINATION', status: 'ROUTE SYSTEM / ONLINE', terms: '이용약관', privacy: '개인정보 처리방침', copyright: '© 2026 Silicon Grove. All Rights Reserved.', disclaimer: '서비스는 테스트 및 평가 목적으로 제공됩니다. 사용자는 관련 법률을 준수하고 불법적인 목적으로 사용해서는 안 됩니다.', title: 'Silicon Grove | 지능형 컴퓨팅', description: 'Silicon Grove - 지능형 컴퓨팅을 향한 경로.', aria: 'Silicon Grove 사이트 경로로 이동 (새 창에서 열림)' },
+        'zh-TW': { brand: '矽碳森林', eyebrow: 'INTELLIGENT COMPUTING', headline: '連結運算的', headlineAccent: '下一種可能', intro: '矽碳森林正在建構面向未來的智慧基礎設施。請選擇入口，進入我們的站點路由。', cta: '進入站點路由', destination: 'DESTINATION', status: 'ROUTE SYSTEM / ONLINE', terms: '使用者協議', privacy: '隱私政策', copyright: '© 2026 矽碳森林。保留所有權利。', disclaimer: '本站服務僅供測試與體驗。使用者須遵守所在地適用法律，不得將服務用於任何違法用途。', title: '矽碳森林 | Silicon Grove', description: '矽碳森林 - 面向智慧運算的站點路由。', aria: '進入矽碳森林站點路由（新視窗開啟）' }
+      };
+
+      const legalTranslations = {
+        en: {
+          close: 'Close',
+          termsTitle: 'User Agreement',
+          termsBody: [
+            'Effective date: August 8, 2026. By accessing or using Silicon Grove services, you agree to this User Agreement. If you do not agree, please do not use the services.',
+            'Permitted use. You may use the services only for lawful testing, evaluation, learning, and other authorized purposes. You must not abuse the services, interfere with their operation, bypass access controls, infringe intellectual property or privacy rights, or create, distribute, or facilitate unlawful or harmful content.',
+            'Third-party services. The site may link to or rely on third-party services. Their availability, content, and practices are controlled by their respective providers and are subject to their own terms and policies.',
+            'Availability and liability. Services are provided “as is” and “as available” without warranties to the extent permitted by law. Silicon Grove does not guarantee uninterrupted or error-free operation and is not liable for indirect, incidental, or consequential losses arising from use of the services.',
+            'Changes and contact. We may update the services or this Agreement when reasonably necessary. Continued use after an update constitutes acceptance of the revised terms. Questions may be sent to support@silicogrove.com.'
+          ],
+          privacyTitle: 'Privacy Policy',
+          privacyBody: [
+            'Effective date: August 8, 2026. This Privacy Policy explains how Silicon Grove handles information when you visit this site or contact us.',
+            'Information we process. We may receive information you voluntarily provide by email. Our hosting and security providers may process basic technical data such as IP address, browser type, request time, referring page, and diagnostic logs. This site stores your selected language locally in your browser.',
+            'How information is used. We use information to operate and secure the site, respond to inquiries, prevent abuse, diagnose problems, comply with legal obligations, and improve the services. We do not sell personal information.',
+            'Sharing and retention. Information may be shared with service providers that support hosting, security, and communications, or when required by law. We retain information only as long as reasonably necessary for these purposes and then delete or anonymize it where practical.',
+            'Your choices and contact. You can clear the saved language preference through your browser settings. Subject to applicable law, you may request access, correction, or deletion of personal information by contacting support@silicogrove.com.'
+          ]
+        },
+        'zh-CN': {
+          close: '关闭',
+          termsTitle: '用户协议',
+          termsBody: [
+            '生效日期：2026年8月8日。访问或使用硅碳森林服务即表示您同意本用户协议；如您不同意，请停止使用相关服务。',
+            '允许的用途。您只能将服务用于合法的测试、体验、学习及其他已获授权的目的。您不得滥用服务、干扰服务运行、绕过访问控制、侵犯知识产权或隐私权，也不得制作、传播或协助任何违法或有害内容。',
+            '第三方服务。本站可能链接或依赖第三方服务，其可用性、内容及处理方式由相应服务商负责，并适用其各自的条款和政策。',
+            '可用性与责任。服务在法律允许的范围内按“现状”和“可用状态”提供，不作任何保证。硅碳森林不保证服务不间断或无错误，对因使用服务产生的间接、附带或后果性损失不承担责任。',
+            '变更与联系。我们可在合理必要时更新服务或本协议；更新后继续使用即视为接受修订内容。如有问题，请联系 support@silicogrove.com。'
+          ],
+          privacyTitle: '隐私政策',
+          privacyBody: [
+            '生效日期：2026年8月8日。本隐私政策说明您访问本站或联系我们时，硅碳森林如何处理相关信息。',
+            '我们处理的信息。我们可能收到您通过电子邮件主动提供的信息。托管与安全服务商可能处理IP地址、浏览器类型、请求时间、来源页面及诊断日志等基本技术数据。本站还会在您的浏览器本地保存所选语言。',
+            '信息用途。我们使用相关信息来运营和保护网站、回复咨询、防止滥用、排查故障、履行法律义务及改进服务。我们不会出售个人信息。',
+            '共享与保存。信息可能会提供给支持托管、安全和通信的服务商，或在法律要求时予以披露。我们仅在实现上述目的所合理需要的期限内保存信息，之后会在可行情况下删除或匿名化。',
+            '您的选择与联系。您可通过浏览器设置清除已保存的语言偏好。依适用法律，您可联系 support@silicogrove.com 请求访问、更正或删除个人信息。'
+          ]
+        },
+        ja: {
+          close: '閉じる',
+          termsTitle: '利用規約',
+          termsBody: [
+            '発効日：2026年8月8日。Silicon Grove のサービスにアクセスまたは利用することにより、本利用規約に同意したものとみなされます。同意しない場合は利用しないでください。',
+            '許可される利用。本サービスは、合法的なテスト、評価、学習および承認された目的にのみ利用できます。サービスの悪用、運営妨害、アクセス制御の回避、知的財産権・プライバシー権の侵害、違法または有害なコンテンツの作成・配布は禁止します。',
+            '第三者サービス。本サイトは第三者サービスへのリンクまたは依存を含む場合があります。その可用性、内容および取扱いには各提供者の規約とポリシーが適用されます。',
+            '可用性と責任。法令で認められる範囲で、サービスは「現状有姿」かつ「提供可能な状態」で提供されます。中断やエラーがないことを保証せず、利用に起因する間接的・付随的・結果的損害について責任を負いません。',
+            '変更と連絡。合理的に必要な場合、サービスまたは本規約を更新することがあります。更新後の継続利用は改定への同意を意味します。お問い合わせは support@silicogrove.com までお願いします。'
+          ],
+          privacyTitle: 'プライバシーポリシー',
+          privacyBody: [
+            '発効日：2026年8月8日。本ポリシーは、本サイトの訪問またはお問い合わせの際に Silicon Grove が情報を取り扱う方法を説明します。',
+            '取り扱う情報。メールで任意に提供された情報を受領する場合があります。ホスティングおよびセキュリティ事業者は、IPアドレス、ブラウザ種別、リクエスト時刻、参照元、診断ログ等を処理する場合があります。選択した言語はブラウザ内に保存されます。',
+            '利用目的。サイトの運営・保護、問い合わせ対応、不正利用防止、障害調査、法的義務の履行およびサービス改善のために使用します。個人情報を販売することはありません。',
+            '共有と保存。ホスティング、セキュリティ、通信を支援する事業者、または法令に基づく場合に情報を共有することがあります。必要な期間のみ保持し、その後は可能な範囲で削除または匿名化します。',
+            '選択と連絡。ブラウザ設定から言語設定を削除できます。適用法令に基づくアクセス、訂正または削除の請求は support@silicogrove.com までご連絡ください。'
+          ]
+        },
+        es: {
+          close: 'Cerrar',
+          termsTitle: 'Acuerdo de usuario',
+          termsBody: [
+            'Fecha de entrada en vigor: 8 de agosto de 2026. Al acceder o utilizar los servicios de Silicon Grove, aceptas este Acuerdo. Si no estás de acuerdo, no utilices los servicios.',
+            'Uso permitido. Solo puedes utilizar los servicios para pruebas, evaluación, aprendizaje y otros fines autorizados y legales. No debes abusar de los servicios, interferir en su funcionamiento, eludir controles de acceso, infringir derechos ni crear o distribuir contenido ilegal o perjudicial.',
+            'Servicios de terceros. El sitio puede enlazar o depender de servicios de terceros. Su disponibilidad, contenido y prácticas están bajo el control de sus proveedores y sujetos a sus propios términos y políticas.',
+            'Disponibilidad y responsabilidad. Los servicios se ofrecen “tal cual” y “según disponibilidad”, sin garantías en la medida permitida por la ley. No garantizamos un funcionamiento ininterrumpido o libre de errores ni respondemos por pérdidas indirectas o consecuentes.',
+            'Cambios y contacto. Podemos actualizar los servicios o este Acuerdo cuando sea razonablemente necesario. El uso continuado implica la aceptación de los términos revisados. Contacto: support@silicogrove.com.'
+          ],
+          privacyTitle: 'Política de privacidad',
+          privacyBody: [
+            'Fecha de entrada en vigor: 8 de agosto de 2026. Esta Política explica cómo Silicon Grove trata la información cuando visitas el sitio o nos contactas.',
+            'Información tratada. Podemos recibir la información que envíes voluntariamente por correo. Los proveedores de alojamiento y seguridad pueden tratar datos técnicos como dirección IP, navegador, hora de solicitud, página de referencia y registros de diagnóstico. El idioma elegido se guarda localmente en tu navegador.',
+            'Uso de la información. La utilizamos para operar y proteger el sitio, responder consultas, prevenir abusos, diagnosticar problemas, cumplir obligaciones legales y mejorar los servicios. No vendemos información personal.',
+            'Cesión y conservación. Podemos compartir información con proveedores de alojamiento, seguridad y comunicaciones, o cuando la ley lo exija. La conservamos solo durante el tiempo razonablemente necesario y después la eliminamos o anonimizamos cuando sea posible.',
+            'Opciones y contacto. Puedes borrar el idioma guardado desde el navegador. Según la ley aplicable, puedes solicitar acceso, corrección o eliminación escribiendo a support@silicogrove.com.'
+          ]
+        },
+        fr: {
+          close: 'Fermer',
+          termsTitle: 'Conditions d’utilisation',
+          termsBody: [
+            'Date d’entrée en vigueur : 8 août 2026. En accédant aux services Silicon Grove ou en les utilisant, vous acceptez les présentes Conditions. Si vous les refusez, veuillez ne pas utiliser les services.',
+            'Utilisation autorisée. Les services sont réservés aux tests, à l’évaluation, à l’apprentissage et à d’autres finalités légales autorisées. Il est interdit d’en abuser, d’en perturber le fonctionnement, de contourner les contrôles d’accès, de violer des droits ou de créer et diffuser des contenus illégaux ou préjudiciables.',
+            'Services tiers. Le site peut contenir des liens vers des services tiers ou s’appuyer sur eux. Leur disponibilité, leur contenu et leurs pratiques relèvent de leurs fournisseurs et de leurs propres conditions et politiques.',
+            'Disponibilité et responsabilité. Les services sont fournis « en l’état » et « selon disponibilité », sans garantie dans les limites autorisées par la loi. Nous ne garantissons pas un fonctionnement continu ou sans erreur et déclinons toute responsabilité pour les pertes indirectes ou consécutives.',
+            'Modifications et contact. Nous pouvons mettre à jour les services ou ces Conditions lorsque cela est raisonnablement nécessaire. La poursuite de l’utilisation vaut acceptation. Contact : support@silicogrove.com.'
+          ],
+          privacyTitle: 'Politique de confidentialité',
+          privacyBody: [
+            'Date d’entrée en vigueur : 8 août 2026. Cette Politique explique comment Silicon Grove traite les informations lorsque vous consultez ce site ou nous contactez.',
+            'Informations traitées. Nous pouvons recevoir les informations envoyées volontairement par e-mail. Nos prestataires d’hébergement et de sécurité peuvent traiter des données techniques telles que l’adresse IP, le navigateur, l’heure de requête, la page référente et les journaux de diagnostic. La langue choisie est enregistrée localement dans votre navigateur.',
+            'Utilisation. Nous utilisons ces informations pour exploiter et sécuriser le site, répondre aux demandes, prévenir les abus, diagnostiquer les problèmes, respecter nos obligations légales et améliorer les services. Nous ne vendons pas les données personnelles.',
+            'Partage et conservation. Les informations peuvent être partagées avec nos prestataires d’hébergement, de sécurité et de communication, ou lorsque la loi l’exige. Elles sont conservées uniquement pendant la durée raisonnablement nécessaire, puis supprimées ou anonymisées lorsque cela est possible.',
+            'Vos choix et contact. Vous pouvez supprimer la langue enregistrée dans les réglages du navigateur. Selon la loi applicable, vous pouvez demander l’accès, la rectification ou la suppression à support@silicogrove.com.'
+          ]
+        },
+        ru: {
+          close: 'Закрыть',
+          termsTitle: 'Пользовательское соглашение',
+          termsBody: [
+            'Дата вступления в силу: 8 августа 2026 г. Используя сервисы Silicon Grove, вы принимаете настоящее Соглашение. Если вы не согласны с ним, не используйте сервисы.',
+            'Разрешённое использование. Сервисы можно использовать только для законного тестирования, оценки, обучения и иных разрешённых целей. Запрещены злоупотребление сервисами, вмешательство в их работу, обход контроля доступа, нарушение прав и создание или распространение незаконного либо вредоносного контента.',
+            'Сторонние сервисы. Сайт может содержать ссылки на сторонние сервисы или зависеть от них. Их доступность, содержание и правила определяются соответствующими поставщиками и регулируются их условиями и политиками.',
+            'Доступность и ответственность. Сервисы предоставляются «как есть» и «по мере доступности» без гарантий в пределах, допускаемых законом. Мы не гарантируем непрерывную или безошибочную работу и не отвечаем за косвенные или последующие убытки.',
+            'Изменения и связь. При разумной необходимости мы можем обновлять сервисы или Соглашение. Продолжение использования означает принятие изменений. Вопросы: support@silicogrove.com.'
+          ],
+          privacyTitle: 'Политика конфиденциальности',
+          privacyBody: [
+            'Дата вступления в силу: 8 августа 2026 г. Настоящая Политика объясняет, как Silicon Grove обрабатывает информацию при посещении сайта или обращении к нам.',
+            'Обрабатываемая информация. Мы можем получать данные, добровольно отправленные по электронной почте. Поставщики хостинга и безопасности могут обрабатывать IP-адрес, тип браузера, время запроса, страницу-источник и диагностические журналы. Выбранный язык сохраняется локально в браузере.',
+            'Цели использования. Информация используется для работы и защиты сайта, ответа на обращения, предотвращения злоупотреблений, диагностики, исполнения юридических обязанностей и улучшения сервисов. Мы не продаём персональные данные.',
+            'Передача и хранение. Информация может передаваться поставщикам хостинга, безопасности и связи либо раскрываться по требованию закона. Она хранится только разумно необходимый срок, после чего удаляется или обезличивается, когда это возможно.',
+            'Ваши права и связь. Языковые настройки можно удалить в браузере. В соответствии с применимым законом запросы на доступ, исправление или удаление можно направить на support@silicogrove.com.'
+          ]
+        },
+        ko: {
+          close: '닫기',
+          termsTitle: '이용약관',
+          termsBody: [
+            '시행일: 2026년 8월 8일. Silicon Grove 서비스에 접속하거나 이용하면 본 약관에 동의한 것으로 간주됩니다. 동의하지 않는 경우 서비스를 이용하지 마십시오.',
+            '허용된 이용. 서비스는 합법적인 테스트, 평가, 학습 및 승인된 목적으로만 사용할 수 있습니다. 서비스 남용, 운영 방해, 접근 통제 우회, 지식재산권 또는 개인정보 침해, 불법 또는 유해 콘텐츠의 제작과 배포는 금지됩니다.',
+            '제3자 서비스. 사이트는 제3자 서비스로 연결되거나 이에 의존할 수 있습니다. 해당 서비스의 가용성, 콘텐츠 및 처리 방식에는 각 제공자의 약관과 정책이 적용됩니다.',
+            '가용성 및 책임. 법률이 허용하는 범위에서 서비스는 “있는 그대로” 및 “이용 가능한 상태로” 제공됩니다. 중단이나 오류가 없음을 보장하지 않으며, 서비스 이용으로 인한 간접적 또는 결과적 손실에 책임을 지지 않습니다.',
+            '변경 및 문의. 합리적으로 필요한 경우 서비스 또는 약관을 변경할 수 있습니다. 변경 후 계속 이용하면 개정 약관에 동의한 것으로 간주됩니다. 문의: support@silicogrove.com.'
+          ],
+          privacyTitle: '개인정보 처리방침',
+          privacyBody: [
+            '시행일: 2026년 8월 8일. 본 방침은 사이트 방문 또는 문의 시 Silicon Grove가 정보를 처리하는 방식을 설명합니다.',
+            '처리 정보. 이메일로 자발적으로 제공한 정보를 받을 수 있습니다. 호스팅 및 보안 제공자는 IP 주소, 브라우저 유형, 요청 시간, 유입 페이지 및 진단 로그 등의 기술 정보를 처리할 수 있습니다. 선택한 언어는 브라우저에 로컬로 저장됩니다.',
+            '이용 목적. 사이트 운영과 보호, 문의 답변, 악용 방지, 문제 진단, 법적 의무 준수 및 서비스 개선을 위해 사용합니다. 개인정보를 판매하지 않습니다.',
+            '공유 및 보관. 호스팅, 보안, 통신 제공자와 정보를 공유하거나 법률상 요구되는 경우 공개할 수 있습니다. 목적에 합리적으로 필요한 기간만 보관한 뒤 가능한 경우 삭제하거나 익명화합니다.',
+            '선택 및 문의. 브라우저 설정에서 저장된 언어를 삭제할 수 있습니다. 관련 법률에 따른 열람, 정정 또는 삭제 요청은 support@silicogrove.com으로 보내주십시오.'
+          ]
+        },
+        'zh-TW': {
+          close: '關閉',
+          termsTitle: '使用者協議',
+          termsBody: [
+            '生效日期：2026年8月8日。存取或使用矽碳森林服務即表示您同意本使用者協議；如不同意，請停止使用相關服務。',
+            '允許用途。您僅可將服務用於合法的測試、體驗、學習及其他獲授權目的。不得濫用服務、干擾運作、規避存取控制、侵害智慧財產權或隱私權，也不得製作、散布或協助任何違法或有害內容。',
+            '第三方服務。本站可能連結或依賴第三方服務，其可用性、內容及處理方式由相應供應商負責，並適用其各自的條款與政策。',
+            '可用性與責任。服務在法律允許範圍內依「現況」與「可用狀態」提供，不作任何保證。矽碳森林不保證服務不中斷或無錯誤，對使用服務所生的間接、附帶或衍生損失不負責任。',
+            '變更與聯絡。我們可在合理必要時更新服務或本協議；更新後繼續使用即視為接受修訂內容。如有問題，請聯絡 support@silicogrove.com。'
+          ],
+          privacyTitle: '隱私政策',
+          privacyBody: [
+            '生效日期：2026年8月8日。本隱私政策說明您造訪本站或聯絡我們時，矽碳森林如何處理相關資訊。',
+            '我們處理的資訊。我們可能收到您透過電子郵件主動提供的資訊。託管與安全服務商可能處理IP位址、瀏覽器類型、請求時間、來源頁面及診斷紀錄等基本技術資料。本站亦會在瀏覽器本機儲存所選語言。',
+            '資訊用途。我們使用相關資訊來營運與保護網站、回覆詢問、防止濫用、排查問題、履行法律義務及改善服務。我們不會出售個人資訊。',
+            '分享與保存。資訊可能提供給支援託管、安全和通訊的服務商，或在法律要求時揭露。我們僅在實現上述目的所合理需要的期間保存資訊，之後會在可行情況下刪除或匿名化。',
+            '您的選擇與聯絡。您可透過瀏覽器設定清除已儲存的語言偏好。依適用法律，您可聯絡 support@silicogrove.com 請求存取、更正或刪除個人資訊。'
+          ]
+        }
       };
 
       const languageSelect = document.getElementById('language');
       const routeLink = document.getElementById('route-link');
+      const legalDialog = document.getElementById('legal-dialog');
+      const legalTitle = document.getElementById('legal-title');
+      const legalBody = document.getElementById('legal-body');
+      const legalClose = document.getElementById('legal-close');
       const initialLanguage = localStorage.getItem('silicon-grove-language') || 'en';
+      let currentLanguage = translations[initialLanguage] ? initialLanguage : 'en';
+      let currentLegalType = null;
+
+      function renderLegal(type) {
+        const legal = legalTranslations[currentLanguage] || legalTranslations.en;
+        const body = legal[type + 'Body'];
+        legalTitle.textContent = legal[type + 'Title'];
+        legalClose.setAttribute('aria-label', legal.close);
+        const fragment = document.createDocumentFragment();
+        body.forEach((text) => {
+          const paragraph = document.createElement('p');
+          paragraph.textContent = text;
+          fragment.appendChild(paragraph);
+        });
+        legalBody.replaceChildren(fragment);
+      }
 
       function setLanguage(language) {
-        const content = translations[language] || translations.en;
-        document.documentElement.lang = language;
+        currentLanguage = translations[language] ? language : 'en';
+        const content = translations[currentLanguage];
+        document.documentElement.lang = currentLanguage;
         document.title = content.title;
         document.querySelector('meta[name="description"]').content = content.description;
         document.querySelectorAll('[data-i18n]').forEach((element) => { element.textContent = content[element.dataset.i18n]; });
         routeLink.setAttribute('aria-label', content.aria);
-        languageSelect.value = language;
-        localStorage.setItem('silicon-grove-language', language);
+        languageSelect.value = currentLanguage;
+        localStorage.setItem('silicon-grove-language', currentLanguage);
+        if (currentLegalType) renderLegal(currentLegalType);
       }
 
       languageSelect.addEventListener('change', (event) => setLanguage(event.target.value));
+      document.querySelectorAll('[data-legal]').forEach((button) => {
+        button.addEventListener('click', () => {
+          currentLegalType = button.dataset.legal;
+          renderLegal(currentLegalType);
+          legalDialog.showModal();
+        });
+      });
+      legalClose.addEventListener('click', () => legalDialog.close());
+      legalDialog.addEventListener('click', (event) => {
+        if (event.target === legalDialog) legalDialog.close();
+      });
+      legalDialog.addEventListener('close', () => { currentLegalType = null; });
       setLanguage(initialLanguage);
 
       const canvas = document.getElementById('field');
