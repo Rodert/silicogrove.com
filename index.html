@@ -115,6 +115,19 @@
         line-height: 1.8;
       }
 
+      .pricing-entry {
+        width: min(100%, 560px);
+        margin: 0 0 16px;
+        padding: 17px 19px;
+        border: 1px solid rgba(121, 240, 208, .34);
+        background: rgba(5, 17, 20, .62);
+      }
+      .pricing-entry strong { display: block; color: var(--aqua); font-size: 13px; letter-spacing: .3px; }
+      .pricing-entry p { margin: 4px 0 11px; color: #b8c8c5; font-size: 13px; line-height: 1.65; }
+      .pricing-entry a { display: inline-flex; align-items: center; gap: 8px; color: var(--ink); font-size: 12px; font-weight: 700; text-decoration: none; }
+      .pricing-entry a:hover { color: var(--aqua); }
+      .pricing-entry a:focus-visible { outline: 2px solid var(--aqua); outline-offset: 4px; }
+
       .route {
         display: inline-flex;
         flex-wrap: wrap;
@@ -169,6 +182,7 @@
         main { padding: 9vh 0; }
         h1 { font-size: clamp(48px, 15vw, 76px); }
         .intro { margin: 25px 0 36px; font-size: 14px; }
+        .pricing-entry { margin-top: -12px; }
         .route { display: flex; width: 100%; }
         .route a { flex: 1 1 100%; justify-content: space-between; }
         .route-meta { flex: 1 1 100%; border-top: 1px solid var(--line); }
@@ -209,6 +223,11 @@
         <div class="eyebrow" data-i18n="eyebrow">INTELLIGENT COMPUTING</div>
         <h1><span data-i18n="headline">Computing,</span><span data-i18n="headlineAccent">connected.</span></h1>
         <p class="intro" data-i18n="intro">Silicon Grove is building intelligent infrastructure for what comes next. Select an entry point to access our site route.</p>
+        <aside class="pricing-entry" aria-label="Model pricing">
+          <strong data-i18n="pricingTitle">Prepaid, usage-based model billing</strong>
+          <p data-i18n="pricingDescription">Browse live per-model token and per-request rates before you recharge.</p>
+          <a href="https://ai.silicogrove.com/pricing" target="_blank" rel="noopener noreferrer"><span data-i18n="pricingCta">View model pricing</span><span aria-hidden="true">&#8599;</span></a>
+        </aside>
         <div class="route">
           <a id="route-link" href="https://link3.cc/silicogrove" target="_blank" rel="noopener noreferrer" aria-label="Enter Silicon Grove site route (opens in a new window)">
             <span data-i18n="cta">Enter site route</span><span class="arrow" aria-hidden="true">&#8599;</span>
@@ -225,6 +244,7 @@
         <div class="legal">
           <nav class="footer-links" aria-label="Legal and contact">
             <a href="mailto:support@silicogrove.com">support@silicogrove.com</a>
+            <a href="https://ai.silicogrove.com/pricing" target="_blank" rel="noopener noreferrer" data-i18n="pricingCta">View model pricing</a>
             <a href="/service-terms.html" data-i18n="serviceTerms">Service Terms</a>
             <a href="/user-agreement.html" data-i18n="terms">User Agreement</a>
             <a href="/privacy-policy.html" data-i18n="privacy">Privacy Policy</a>
@@ -236,8 +256,8 @@
     </div>
     <script>
       const translations = {
-        en: { brand: 'SILICON GROVE', eyebrow: 'INTELLIGENT COMPUTING', headline: 'Computing,', headlineAccent: 'connected.', intro: 'Silicon Grove is building intelligent infrastructure for what comes next. Select an entry point to access our site route.', cta: 'Enter site route', destination: 'DESTINATION', status: 'ROUTE SYSTEM / ONLINE', serviceTerms: 'Service Terms', terms: 'User Agreement', privacy: 'Privacy Policy', copyright: '© 2026 Silicon Grove. All Rights Reserved.', disclaimer: 'Services are provided for testing and evaluation. Users must comply with applicable laws and must not use them for unlawful purposes.', title: 'Silicon Grove | Intelligent Computing', description: 'Silicon Grove - a route to intelligent computing.', aria: 'Enter the Silicon Grove site route (opens in a new window)' },
-        'zh-CN': { brand: '硅碳森林', eyebrow: 'INTELLIGENT COMPUTING', headline: '连接计算的', headlineAccent: '下一种可能', intro: '硅碳森林正在构建面向未来的智能基础设施。请选择入口，进入我们的站点路由。', cta: '进入站点路由', destination: 'DESTINATION', status: 'ROUTE SYSTEM / ONLINE', serviceTerms: '服务条款', terms: '用户协议', privacy: '隐私政策', copyright: '© 2026 硅碳森林。保留所有权利。', disclaimer: '本站服务仅用于测试和体验。用户须遵守所在地适用法律法规，不得将服务用于任何违法用途。', title: '硅碳森林 | Silicon Grove', description: '硅碳森林 - 面向智能计算的站点路由。', aria: '进入硅碳森林站点路由（新窗口打开）' },
+        en: { brand: 'SILICON GROVE', eyebrow: 'INTELLIGENT COMPUTING', headline: 'Computing,', headlineAccent: 'connected.', intro: 'Silicon Grove is building intelligent infrastructure for what comes next. Select an entry point to access our site route.', pricingTitle: 'Prepaid, usage-based model billing', pricingDescription: 'Browse live per-model token and per-request rates before you recharge.', pricingCta: 'View model pricing', cta: 'Enter site route', destination: 'DESTINATION', status: 'ROUTE SYSTEM / ONLINE', serviceTerms: 'Service Terms', terms: 'User Agreement', privacy: 'Privacy Policy', copyright: '© 2026 Silicon Grove. All Rights Reserved.', disclaimer: 'Services are provided for testing and evaluation. Users must comply with applicable laws and must not use them for unlawful purposes.', title: 'Silicon Grove | Intelligent Computing', description: 'Silicon Grove - a route to intelligent computing.', aria: 'Enter the Silicon Grove site route (opens in a new window)' },
+        'zh-CN': { brand: '硅碳森林', eyebrow: 'INTELLIGENT COMPUTING', headline: '连接计算的', headlineAccent: '下一种可能', intro: '硅碳森林正在构建面向未来的智能基础设施。请选择入口，进入我们的站点路由。', pricingTitle: '先充值，按模型实际用量计费', pricingDescription: '购买前可查看每个模型按 Token 或按次计费的实时价格。', pricingCta: '查看模型定价', cta: '进入站点路由', destination: 'DESTINATION', status: 'ROUTE SYSTEM / ONLINE', serviceTerms: '服务条款', terms: '用户协议', privacy: '隐私政策', copyright: '© 2026 硅碳森林。保留所有权利。', disclaimer: '本站服务仅用于测试和体验。用户须遵守所在地适用法律法规，不得将服务用于任何违法用途。', title: '硅碳森林 | Silicon Grove', description: '硅碳森林 - 面向智能计算的站点路由。', aria: '进入硅碳森林站点路由（新窗口打开）' },
         ja: { brand: 'シリコン・グローブ', eyebrow: 'INTELLIGENT COMPUTING', headline: '計算をつなぐ、', headlineAccent: '次の可能性。', intro: 'Silicon Grove は、次代に向けたインテリジェント・インフラストラクチャを構築しています。入口を選択し、サイトルートへお進みください。', cta: 'サイトルートへ', destination: 'DESTINATION', status: 'ROUTE SYSTEM / ONLINE', serviceTerms: 'サービス利用規約', terms: '利用規約', privacy: 'プライバシーポリシー', copyright: '© 2026 Silicon Grove. All Rights Reserved.', disclaimer: '本サービスはテストおよび評価目的で提供されます。適用法令を遵守し、違法な目的で使用しないでください。', title: 'Silicon Grove | インテリジェント・コンピューティング', description: 'Silicon Grove - インテリジェント・コンピューティングへのルート。', aria: 'Silicon Grove のサイトルートへ進む（新しいウィンドウで開きます）' },
         es: { brand: 'SILICON GROVE', eyebrow: 'COMPUTACIÓN INTELIGENTE', headline: 'Conectar el', headlineAccent: 'cómputo.', intro: 'Silicon Grove construye infraestructura inteligente para el futuro. Elige un acceso para entrar a nuestra ruta del sitio.', cta: 'Entrar a la ruta', destination: 'DESTINO', status: 'SISTEMA DE RUTA / EN LÍNEA', serviceTerms: 'Términos del servicio', terms: 'Acuerdo de usuario', privacy: 'Política de privacidad', copyright: '© 2026 Silicon Grove. Todos los derechos reservados.', disclaimer: 'Los servicios se ofrecen para pruebas y evaluación. Los usuarios deben cumplir las leyes aplicables y no utilizarlos con fines ilícitos.', title: 'Silicon Grove | Computación inteligente', description: 'Silicon Grove - una ruta hacia la computación inteligente.', aria: 'Entrar a la ruta del sitio de Silicon Grove (se abre en una ventana nueva)' },
         fr: { brand: 'SILICON GROVE', eyebrow: 'INFORMATIQUE INTELLIGENTE', headline: 'Relier le', headlineAccent: 'calcul.', intro: 'Silicon Grove construit une infrastructure intelligente pour l’avenir. Sélectionnez une entrée pour accéder à notre itinéraire.', cta: 'Accéder au site', destination: 'DESTINATION', status: 'SYSTÈME DE ROUTAGE / EN LIGNE', serviceTerms: 'Conditions de service', terms: 'Conditions d’utilisation', privacy: 'Politique de confidentialité', copyright: '© 2026 Silicon Grove. Tous droits réservés.', disclaimer: 'Les services sont fournis à des fins de test et d’évaluation. Les utilisateurs doivent respecter les lois applicables et ne pas les utiliser à des fins illicites.', title: 'Silicon Grove | Informatique intelligente', description: 'Silicon Grove - une voie vers l’informatique intelligente.', aria: 'Accéder à l’itinéraire du site Silicon Grove (s’ouvre dans une nouvelle fenêtre)' },
@@ -412,7 +432,9 @@
         document.documentElement.lang = currentLanguage;
         document.title = content.title;
         document.querySelector('meta[name="description"]').content = content.description;
-        document.querySelectorAll('[data-i18n]').forEach((element) => { element.textContent = content[element.dataset.i18n]; });
+        document.querySelectorAll('[data-i18n]').forEach((element) => {
+          element.textContent = content[element.dataset.i18n] ?? translations.en[element.dataset.i18n];
+        });
         routeLink.setAttribute('aria-label', content.aria);
         languageSelect.value = currentLanguage;
         localStorage.setItem('silicon-grove-language', currentLanguage);
